@@ -28,6 +28,7 @@ function Sidebar() {
         />
         <SidebarOption Icon={AllInclusiveRoundedIcon} title="Slack Connect" />
         <SidebarOption Icon={MoreVertRoundedIcon} title="More" />
+        <br />
         <SidebarOption Icon={ArrowDropDownRoundedIcon} title="Channels" />
       </SidebarInfo>
     </SidebarContainer>
@@ -43,13 +44,16 @@ const SidebarContainer = styled.div`
   color: white;
   flex: 0.3;
   max-width: 260px;
+  overflow: hidden;
 `;
 const SidebarHeader = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
-  padding: 10px 0;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 20px;
   border-top: 0.1px solid gray;
   border-bottom: 0.1px solid gray;
 
@@ -59,18 +63,19 @@ const SidebarHeader = styled.div`
     font-size: 18px;
     background-color: white;
     border-radius: 999px;
+    cursor: pointer;
   }
 
   > h2 {
     font-size: 20px;
     > .MuiSvgIcon-root {
-      font-size: medium;
+      font-size: large;
       font-weight: bold;
       vertical-align: middle;
+      cursor: pointer;
     }
   }
 `;
 const SidebarInfo = styled.div`
-  margin: 0;
-  padding: auto 25px;
+  padding-top: 10px;
 `;
