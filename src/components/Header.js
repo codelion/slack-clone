@@ -9,22 +9,22 @@ function Header() {
   return (
     <HeaderContainer>
       <HeaderLeft>
-        <HeaderAvatar />
         <AccessTimeIcon />
       </HeaderLeft>
       <HeaderMiddle>
         <HeaderSearch>
-          <SearchIcon />
           <input
             className="header__searchText"
             type="text"
             placeholder="Search"
           ></input>
+          <SearchIcon />
         </HeaderSearch>
       </HeaderMiddle>
 
       <HeaderRight>
         <HelpOutlineIcon />
+        <HeaderAvatar variant="rounded" />
       </HeaderRight>
     </HeaderContainer>
   );
@@ -41,31 +41,27 @@ const HeaderContainer = styled.div`
   padding: 5px;
 `;
 const HeaderLeft = styled.div`
-  flex: 0.3;
+  flex: 0.2;
   display: flex;
   align-items: center;
 
   justify-content: space-between;
   color: white;
+  align-items: flex-end;
 
   > .MuiSvgIcon-root {
-    margin-right: 20px;
-  }
-`;
-
-const HeaderAvatar = styled(Avatar)`
-  cursor: pointer;
-  margin-left: 20px;
-
-  :hover {
-    opacity: 0.8;
+    font-size: 22px;
+    margin-left: auto;
+    margin-right: 22px;
+    cursor: pointer;
   }
 `;
 
 const HeaderMiddle = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 0.4;
+  flex: 0.6;
+  width: 100%;
 `;
 const HeaderSearch = styled.div`
   display: flex;
@@ -73,31 +69,54 @@ const HeaderSearch = styled.div`
   border: 1px solid gray;
   flex: 1;
   border-radius: 6px;
-  color: gray;
-  padding: 0 50px;
+  background-color: rgba(209, 210, 211, 0.2);
+  color: white;
+  padding: 0 5px;
   text-align: center;
   vertical-align: middle;
-
+  justify-content: space-between;
+  height: 25px;
+  :hover {
+    background-color: rgba(209, 210, 211, 0.23);
+  }
   > input {
     border: none;
     background: none;
     width: 100%;
     min-width: 30vw;
-    color: gray;
+    color: white;
     outline-width: 0;
-    font-size: medium;
-    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+  }
+  > .MuiSvgIcon-root {
+    font-size: 20px;
+    padding: 3px;
   }
 `;
 
 const HeaderRight = styled.div`
   display: flex;
-  flex: 0.3;
+  flex: 0.2;
   color: white;
   align-items: flex-end;
 
   > .MuiSvgIcon-root {
     margin-left: auto;
-    margin-right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 3px;
+  }
+`;
+
+const HeaderAvatar = styled(Avatar)`
+  cursor: pointer;
+  margin-left: 20px;
+  height: 30px !important;
+  width: 30px !important;
+  margin-right: 10px;
+  :hover {
+    opacity: 0.8;
   }
 `;
