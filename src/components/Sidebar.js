@@ -7,9 +7,17 @@ import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded
 import AllInclusiveRoundedIcon from "@mui/icons-material/AllInclusiveRounded";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import SidebarOption from "./SidebarOption";
+// import { doc } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { db } from "../firebase";
+import { collection } from "firebase/firestore";
 
 function Sidebar() {
+  const [channels, loading, error] = useCollection(collection(db, "rooms"));
+  console.log(channels);
+
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -30,6 +38,11 @@ function Sidebar() {
         <SidebarOption Icon={MoreVertRoundedIcon} title="More" />
         <br />
         <SidebarOption Icon={ArrowDropDownRoundedIcon} title="Channels" />
+        <SidebarOption Icon={AddBoxIcon} title="Add Channel" addChannelOption />
+
+        {channels?.docs.map((doc) => (
+          <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
+        ))}
       </SidebarInfo>
     </SidebarContainer>
   );
@@ -50,12 +63,15 @@ const SidebarHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  cursor: pointer;
   padding: 10px;
   padding-left: 15px;
   padding-right: 20px;
   border-top: 0.1px solid gray;
   border-bottom: 0.1px solid gray;
+  :hover {
+    background-color: rgba(209, 210, 211, 0.2);
+  }
 
   > .MuiSvgIcon-root {
     padding: 6px;
