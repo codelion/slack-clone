@@ -7,7 +7,7 @@ import { selectRoomId } from "../features/appSlice";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import ChatInput from "./ChatInput";
 import { db } from "../firebase";
-import { query, orderBy, collection, doc, getDocs } from "firebase/firestore";
+import { query, orderBy, collection, doc } from "firebase/firestore";
 import Message from "./Message";
 
 function Chat() {
