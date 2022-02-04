@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Button } from "@mui/material";
 import { db } from "../firebase";
 import { addDoc, collection, serverTimestamp, doc } from "firebase/firestore";
-import { SportsMotorsportsSharp } from "@mui/icons-material";
 
 function ChatInput({ chatRef, channelName, channelId }) {
   console.log(channelId);
