@@ -16,7 +16,6 @@ import { collection } from "firebase/firestore";
 
 function Sidebar() {
   const [channels, loading, error] = useCollection(collection(db, "rooms"));
-  console.log(channels);
 
   return (
     <SidebarContainer>
