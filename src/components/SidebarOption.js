@@ -35,7 +35,7 @@ function SidebarOption({ Icon, title, addChannelOption, id }) {
       {Icon ? (
         <Title>{title}</Title>
       ) : (
-        <SidebarOptionChannel style={{ paddingLeft: "45px" }}>
+        <SidebarOptionChannel style={{ paddingLeft: "25px" }}>
           <span>#</span>
           <Title>{title}</Title>
         </SidebarOptionChannel>
@@ -57,7 +57,7 @@ const SidebarOptionContainer = styled.div`
     color: white;
   }
   :hover {
-    background-color: rgba(209, 210, 211, 0.2);
+    background-color: var(--slack-color-dark);
   }
   > .MuiSvgIcon-root {
     font-size: 16px;

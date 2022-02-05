@@ -15,7 +15,7 @@ import { db } from "../firebase";
 import { collection } from "firebase/firestore";
 
 function Sidebar() {
-  const [channels, loading, error] = useCollection(collection(db, "rooms"));
+  const [channels] = useCollection(collection(db, "rooms"));
 
   return (
     <SidebarContainer>
@@ -69,7 +69,7 @@ const SidebarHeader = styled.div`
   border-top: 0.1px solid gray;
   border-bottom: 0.1px solid gray;
   :hover {
-    background-color: rgba(209, 210, 211, 0.2);
+    background-color: var(--slack-color-dark);
   }
 
   > .MuiSvgIcon-root {
