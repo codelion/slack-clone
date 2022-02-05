@@ -4,8 +4,26 @@ import Avatar from "@mui/material/Avatar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SearchIcon from "@mui/icons-material/Search";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { logout } from "../features/userSlice";
+import { useDispatch } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 function Header() {
+  const user = auth.currentUser;
+  const dispatch = useDispatch();
+
+  const signout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(logout());
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   return (
     <HeaderContainer>
       <HeaderLeft>
@@ -24,7 +42,11 @@ function Header() {
 
       <HeaderRight>
         <HelpOutlineIcon />
-        <HeaderAvatar variant="rounded" />
+
+        <ButtonContainer onClick={signout}>
+          <p>Logout</p>
+          <HeaderAvatar variant="rounded" src={user?.photoURL} />
+        </ButtonContainer>
       </HeaderRight>
     </HeaderContainer>
   );
@@ -35,7 +57,7 @@ export default Header;
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: var(--slack-color);
+  background-color: var(--slack-color-dark);
   justify-content: space-between;
   align-items: center;
   padding: 5px;
@@ -112,12 +134,23 @@ const HeaderRight = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  > p {
+    color: white;
+    padding: 4px;
+  }
+`;
+
 const HeaderAvatar = styled(Avatar)`
   cursor: pointer;
   margin-left: 20px;
   height: 30px !important;
   width: 30px !important;
   margin-right: 10px;
+  border-radius: 5px;
   :hover {
     opacity: 0.8;
   }

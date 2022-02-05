@@ -33,6 +33,7 @@ const MessageContainer = styled.div`
 `;
 
 const UserAvatar = styled(Avatar)`
+  border-bottom-left-radius: 5px;
   padding-left: 20px;
 `;
 

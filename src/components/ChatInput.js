@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import { db } from "../firebase";
 import { addDoc, collection, serverTimestamp, doc } from "firebase/firestore";
+import { auth } from "../firebase";
 
 function ChatInput({ chatRef, channelName, channelId }) {
   console.log(channelId);
   const [input, setInput] = useState("");
-
+  const user = auth.currentUser;
   const sendMessage = (e) => {
     e.preventDefault();
     const channelRef = doc(db, "rooms", channelId);
@@ -19,8 +20,8 @@ function ChatInput({ chatRef, channelName, channelId }) {
     addDoc(collection(channelRef, "messages"), {
       message: input,
       timestamp: serverTimestamp(),
-      user: "Manish Jha",
-      userImage: "https://image.flaticon.com/icons/png/512/17/17004.png",
+      user: user.displayName,
+      userImage: user.photoURL,
     });
 
     chatRef.current.scrollIntoView({

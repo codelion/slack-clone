@@ -18,7 +18,7 @@ function Chat() {
   const messageRef = roomId && collection(db, "rooms", roomId, "messages");
   console.log(messageRef);
   const q = roomId && query(messageRef, orderBy("timestamp", "asc"));
-  const [roomMessages, loading, error] = useCollection(roomId && q);
+  const [roomMessages, loading] = useCollection(roomId && q);
   console.log(roomMessages);
 
   useEffect(() => {
@@ -29,39 +29,43 @@ function Chat() {
 
   return (
     <ChatContainer>
-      <>
-        <ChatHeader>
-          <ChatHeaderLeft>
-            <h3># {roomDetails?.data().name}</h3>
-            <KeyboardArrowDownIcon />
-          </ChatHeaderLeft>
-          <ChatHeaderRight>
-            <InfoOutlinedIcon />
-          </ChatHeaderRight>
-        </ChatHeader>
-        <ChatTop />
-        <ChatMessages>
-          {roomMessages?.docs.map((doc) => {
-            const { message, timestamp, user, userImage } = doc.data();
+      {!roomDetails ? (
+        <p></p>
+      ) : (
+        <>
+          <ChatHeader>
+            <ChatHeaderLeft>
+              <h3># {roomDetails?.data().name}</h3>
+              <KeyboardArrowDownIcon />
+            </ChatHeaderLeft>
+            <ChatHeaderRight>
+              <InfoOutlinedIcon />
+            </ChatHeaderRight>
+          </ChatHeader>
+          <ChatTop />
+          <ChatMessages>
+            {roomMessages?.docs.map((doc) => {
+              const { message, timestamp, user, userImage } = doc.data();
 
-            return (
-              <Message
-                key={doc.id}
-                message={message}
-                timestamp={timestamp}
-                user={user}
-                userImage={userImage}
-              />
-            );
-          })}
-          <ChatBottom ref={chatRef} />
-        </ChatMessages>
-        <ChatInput
-          chatRef={chatRef}
-          channelName={roomDetails?.data().name}
-          channelId={roomId}
-        ></ChatInput>
-      </>
+              return (
+                <Message
+                  key={doc.id}
+                  message={message}
+                  timestamp={timestamp}
+                  user={user}
+                  userImage={userImage}
+                />
+              );
+            })}
+            <ChatBottom ref={chatRef} />
+          </ChatMessages>
+          <ChatInput
+            chatRef={chatRef}
+            channelName={roomDetails?.data().name}
+            channelId={roomId}
+          ></ChatInput>
+        </>
+      )}
     </ChatContainer>
   );
 }
@@ -103,6 +107,7 @@ const ChatHeaderLeft = styled.div`
 const ChatHeaderRight = styled.div`
   > .MuiSvgIcon-root {
     padding-top: 8px;
+    cursor: pointer;
   }
 `;
 
