@@ -39,6 +39,8 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 5px;
+  position: fixed;
+  width: 100vw;
 `;
 const HeaderLeft = styled.div`
   flex: 0.2;

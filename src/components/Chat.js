@@ -39,6 +39,7 @@ function Chat() {
             <InfoOutlinedIcon />
           </ChatHeaderRight>
         </ChatHeader>
+        <ChatTop />
         <ChatMessages>
           {roomMessages?.docs.map((doc) => {
             const { message, timestamp, user, userImage } = doc.data();
@@ -73,6 +74,10 @@ const ChatHeader = styled.div`
   border-bottom: 1px solid lightgray;
   justify-content: space-between;
   padding: 7px;
+  position: fixed;
+  width: 77.3vw;
+  background-color: white;
+  z-index: 999;
 `;
 
 const ChatHeaderLeft = styled.div`
@@ -109,5 +114,8 @@ const ChatContainer = styled.div`
 
 const ChatMessages = styled.div``;
 const ChatBottom = styled.div`
-  padding-bottom: 175px;
+  padding-bottom: 200px;
+`;
+const ChatTop = styled.div`
+  padding-bottom: 50px;
 `;

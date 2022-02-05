@@ -25,6 +25,9 @@ function App() {
 export default App;
 
 const AppBody = styled.div`
+  position: fixed;
+  top: 40px;
+  width: 100vw;
   display: flex;
   height: 100vh;
 `;
