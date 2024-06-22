@@ -2,6 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
 
+/**
+ * Message function component. This component returns a message display container with user and message info.
+ *
+ * @param {Object} props - The props that are passed to the component.
+ * @param {string} props.message - The message that the user has sent.
+ * @param {Object} props.timestamp - The timestamp for when the message was sent.
+ * @param {string} props.user - The user who has sent the message.
+ * @param {string} props.userImage - The image of the user who has sent the message.
+ * @return {JSX.Element} A React component that includes the message from the user, the timestamp, user's name, and user's image.
+ */
 function Message({ message, timestamp, user, userImage }) {
   return (
     <MessageContainer>

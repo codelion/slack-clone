@@ -21,11 +21,20 @@ function Chat() {
   const [roomMessages, loading] = useCollection(roomId && q);
   console.log(roomMessages);
 
-  useEffect(() => {
-    chatRef?.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [roomId, loading]); //scrolls the messages to the bottom or most recent when a channel is selected
+  /**
+   * This effect hook is used for scrolling the chat messages to bottom/most recent 
+   * whenever a room or channel is selected or the state is loading. This hook depends on
+   * react hook "roomId" or "loading" and will be called whenever these dependencies are
+   * updated.
+   *
+   * The scrolling is achieved by applying `scrollIntoView` method on `chatRef`'s current
+   * object with a smooth behavior.
+   */
+    useEffect(() => {
+      chatRef?.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, [roomId, loading]); 
 
   return (
     <ChatContainer>
@@ -44,28 +53,46 @@ function Chat() {
           </ChatHeader>
           <ChatTop />
           <ChatMessages>
-            {roomMessages?.docs.map((doc) => {
-              const { message, timestamp, user, userImage } = doc.data();
-
+            /**
+             * The main component that represents chat functionality.
+             *
+             * The component maintains and maps through the roomMessages to create
+             * individual Message components that display user image, message and timestamp.
+             * It also includes a chat input and button for users to send new messages.
+             *
+             * @param {object} roomMessages - An object containing all the chat messages in a room.
+             * @param {object} roomDetails - An object containing detailed information about the room.
+             * @param {string} roomId - The unique id for a chat room.
+             *
+             * @returns {JSX.Element} A collection of chat messages followed by a chat input text field and button.
+             */
+            const ChatComponent = ({roomMessages, roomDetails, roomId}) => {
               return (
-                <Message
-                  key={doc.id}
-                  message={message}
-                  timestamp={timestamp}
-                  user={user}
-                  userImage={userImage}
-                />
+                <>
+                {roomMessages?.docs.map((doc) => {
+                  const { message, timestamp, user, userImage } = doc.data();
+                  
+                  return (
+                    <Message
+                      key={doc.id}
+                      message={message}
+                      timestamp={timestamp}
+                      user={user}
+                      userImage={userImage}
+                    />
+                  );
+                })}
+                <ChatBottom ref={chatRef} />
+                </ChatMessages>
+                <ChatInput
+                  chatRef={chatRef}
+                  channelName={roomDetails?.data().name}
+                  channelId={roomId}
+                >
+                </ChatInput>
+                </>
               );
-            })}
-            <ChatBottom ref={chatRef} />
-          </ChatMessages>
-          <ChatInput
-            chatRef={chatRef}
-            channelName={roomDetails?.data().name}
-            channelId={roomId}
-          ></ChatInput>
-        </>
-      )}
+            };
     </ChatContainer>
   );
 }

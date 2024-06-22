@@ -16,6 +16,12 @@ function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
+  /**
+   * React hook that listens for changes to the authentication state in Firebase.
+   * If a user is signed in, their name, e-mail and photo URL are dispatched to the login function.
+   * If a user is signed out, the logout function is dispatched. 
+   * The dispatch function is a required dependency and should be provided through props or context.
+   */
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -24,6 +30,15 @@ function App() {
           login({
             displayName: user.displayName,
             email: user.email,
+            photoUrl: user.photoUrl,
+          })
+        );
+      } else {
+        // User is signed out
+        dispatch(logout());
+      }
+    });
+  }, [dispatch]);
             photoUrl: user.photoUrl,
           })
         );

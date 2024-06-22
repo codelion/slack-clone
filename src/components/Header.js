@@ -9,10 +9,22 @@ import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
+/**
+ * A function component that represents the Header of the application.
+ * It contains functions to handle user logout, and also the structure for header display.
+ * The header component includes a time access icon, a search bar and an area for logout.
+ * The user's profile image, if existent, would get displayed next to the logout text.
+ *
+ * @returns JSX.Element 
+ */
 function Header() {
   const user = auth.currentUser;
   const dispatch = useDispatch();
 
+  /**
+   * signout function. Signs the user out of their account and logs the action.
+   * Catches and reports any error that occurs during the process.
+   */
   const signout = () => {
     signOut(auth)
       .then(() => {
@@ -46,6 +58,11 @@ function Header() {
         <ButtonContainer onClick={signout}>
           <p>Logout</p>
           <HeaderAvatar variant="rounded" src={user?.photoURL} />
+        </ButtonContainer>
+      </HeaderRight>
+    </HeaderContainer>
+  );
+}
         </ButtonContainer>
       </HeaderRight>
     </HeaderContainer>
