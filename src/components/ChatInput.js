@@ -5,10 +5,29 @@ import { db } from "../firebase";
 import { addDoc, collection, serverTimestamp, doc } from "firebase/firestore";
 import { auth } from "../firebase";
 
+/**
+ * A react component that sets up and manages the chat input functionality in a chat application.
+ *
+ * @param {Object} props - Contains properties passed down to the chat input.
+ * @param {Object} props.chatRef - Contains a reference to the chat component.
+ * @param {String} props.channelName - The name of the current chat channel.
+ * @param {String} props.channelId - The unique id of the current chat channel.
+ *
+ * @returns {Object} Returns a JSX component that includes the chat input field and a 'Send' button.
+ */
 function ChatInput({ chatRef, channelName, channelId }) {
   console.log(channelId);
   const [input, setInput] = useState("");
   const user = auth.currentUser;
+
+  /**
+   * Function to send a message. It grabs the input from the chat input field and adds it to the 'messages' collection in Firestore.
+   * If there is no channelId, the function just returns false.
+   * After a message is sent, the function scrolls the chat to the latest message
+   * and clears the input.
+   *
+   * @param {event} e - an event object generated when the 'Send' button is clicked.
+   */
   const sendMessage = (e) => {
     e.preventDefault();
     const channelRef = doc(db, "rooms", channelId);
@@ -33,6 +52,19 @@ function ChatInput({ chatRef, channelName, channelId }) {
 
   return (
     <ChatInputContainer>
+      <form>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={`Message #${channelName}`}
+        />
+        <Button hidden type="submit" onClick={sendMessage}>
+          Send
+        </Button>
+      </form>
+    </ChatInputContainer>
+  );
+}
       <form>
         <input
           value={input}
