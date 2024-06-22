@@ -20,6 +20,16 @@ const isLocalhost = Boolean(
     )
 );
 
+/**
+ * This function registers a service worker in a production environment.
+ * It checks if the environment is production and if the browser supports service worker.
+ * If the PUBLIC_URL and the page's origin are not the same, 
+ * it returns without registering the service worker.
+ * This function also contains an event listener for the page's onload event,
+ * which checks and registers a service worker if one is present.
+ * 
+ * @param {Object} config - The configuration for the service worker.
+ */
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -54,6 +64,25 @@ export function register(config) {
   }
 }
 
+/**
+ * This function attempts registration of a service worker using a specified url.
+ * Once registration is successful, the function checks for updates
+ * and, if found, logs the state of the worker.
+ * The function also executes specified onSuccess and onUpdate callbacks
+ * based on the current state of the service worker.
+ * Can catch and log any error occurred during the registration process.
+ * 
+ * @param {string} swUrl - The URL where the service worker to be registered is located.
+ * @param {object} config - Config object with callback functions for onSuccess and onUpdate events.
+ *                          Each function, if present, will be invoked with the Service Worker registration
+ *                          as a parameter.
+ * 
+ * The config object structure:
+ * config = {
+ *   onSuccess: fun(registration), // callback function to execute when service worker installed and no controller present
+ *   onUpdate: fun(registration),  // callback function to execute when service worker installed and there is a controller
+ * }
+ */
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
@@ -66,25 +95,17 @@ function registerValidSW(swUrl, config) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // At this point, the updated precached content has been fetched,
-              // but the previous service worker will still serve the older
-              // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
               );
 
-              // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
               }
             } else {
-              // At this point, everything has been precached.
-              // It's the perfect time to display a
-              // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
 
-              // Execute callback
               if (config && config.onSuccess) {
                 config.onSuccess(registration);
               }
@@ -98,6 +119,14 @@ function registerValidSW(swUrl, config) {
     });
 }
 
+/**
+ * Checks if the service worker can be found and if so, registers it. 
+ * If the service worker is not found or is not serving a Javascript file, 
+ * it reloads the page. If there is no internet connection, the app will run in offline mode.
+ *
+ * @param {string} swUrl - The URL of the service worker to register.
+ * @param {Object} config - Configurations for service worker.
+ */ 
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
@@ -128,10 +157,28 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
+/**
+ * This function is used to unregister a service worker if it exists.
+ *
+ * The function checks if 'serviceWorker' is a property in 'navigator' object.
+ * If 'serviceWorker' exists, the function waits until the service worker is ready,
+ * then unregister the service worker.
+ */
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then((registration) => {
       registration.unregister();
+    });
+  }
+}
+     *
+     * The `navigator.serviceWorker.ready` promise is fulfilled when the service worker controlling
+     * page or the previous worker has finished installing and a new worker can start controlling
+     * it. After the promise is resolved, the service worker registration is obtained and the worker
+     * is unregistered using `registration.unregister()`.
+     */
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.unregister(); // this will unregister the service worker
     });
   }
 }
