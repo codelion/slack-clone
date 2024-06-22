@@ -5,9 +5,26 @@ import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 function Login() {
-  const signIn = (e) => {
-    e.preventDefault();
-
+  /**
+   * Function to sign in a user. This is done by preventing the default event behaviour and then 
+   * use the `signInWithPopup` function from Firebase Authentication. 
+   * If there is an error during this process, an alert is shown with the error message.
+   * @param {object} e - event object from the eventListener.
+   */
+   const signIn = (e) => {
+      // Prevent the default behavior of the event
+      e.preventDefault();
+  
+      // Try to sign in with popup. Catch and alert any errors that occur
+      signInWithPopup(auth, provider).catch((error) => {
+        alert(error.message);
+      });
+    };
+     * @method signInWithPopup
+     * @param {Object} auth - The authentication service object from Firebase
+     * @param {Object} provider - The OAuth provider object
+     * @throws {Error} When there is an issue with user sign in
+     */
     signInWithPopup(auth, provider).catch((error) => {
       alert(error.message);
     });
