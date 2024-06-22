@@ -5,12 +5,12 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD0eW_T5YaV1C0Pl_eVs5IfZS4PCFn6hcc",
-  authDomain: "manish-slack-clone.firebaseapp.com",
-  projectId: "manish-slack-clone",
-  storageBucket: "manish-slack-clone.appspot.com",
-  messagingSenderId: "738633377017",
-  appId: "1:738633377017:web:bac7205f6405def673ee28",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
